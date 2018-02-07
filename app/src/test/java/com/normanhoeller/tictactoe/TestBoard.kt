@@ -3,7 +3,7 @@ package com.normanhoeller.tictactoe
 import android.support.v4.app.Fragment
 import com.normanhoeller.tictactoe.model.Board
 import com.normanhoeller.tictactoe.model.Player
-import com.normanhoeller.tictactoe.ui.MainFragment
+import com.normanhoeller.tictactoe.view.MainFragment
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat

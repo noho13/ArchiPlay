@@ -2,7 +2,7 @@ package com.normanhoeller.tictactoe.model
 
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.Fragment
-import com.normanhoeller.tictactoe.ui.MainFragment
+import com.normanhoeller.tictactoe.view.MainFragment
 
 /**
  * Created by norman on 06.02.18.
@@ -11,14 +11,11 @@ class Board(private val view: Fragment, var playStatus: CharArray) {
 
     fun storePosition(player: Player, pos: Int) {
         playStatus[pos] = player.symbol
-//        updateView(pos, player)
     }
 
     fun updateView(pos: Int?, player: Player?) {
         (view as MainFragment).updateView(pos, player)
     }
-
-    fun getValueForPosition(pos: Int) = playStatus[pos]
 
     fun mapToPosition(row: Int, col: Int) = row * 3 + col
 

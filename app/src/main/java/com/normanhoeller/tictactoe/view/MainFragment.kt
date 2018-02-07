@@ -1,4 +1,4 @@
-package com.normanhoeller.tictactoe.ui
+package com.normanhoeller.tictactoe.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -58,10 +58,6 @@ class MainFragment : Fragment(), ViewInterface {
     }
 
     override fun update(mappedPosition: Int?, player: Player?) {
-        if (mappedPosition == null || player == null) {
-            reset()
-            return
-        }
         model.updateView(mappedPosition, player)
     }
 
@@ -87,7 +83,11 @@ class MainFragment : Fragment(), ViewInterface {
     }
 
     fun updateView(pos: Int?, player: Player?) {
-        val symbol = player?.symbol
+        if (pos == null || player == null) {
+            reset()
+            return
+        }
+        val symbol = player.symbol
         when (pos) {
             0 -> tv_0_0.text = symbol.toString()
             1 -> tv_0_1.text = symbol.toString()
@@ -102,7 +102,7 @@ class MainFragment : Fragment(), ViewInterface {
             8 -> tv_2_2.text = symbol.toString()
         }
         if (model.checkForWinner(player, pos)) {
-            tv_result.text = "We have a winner: ${player?.name}"
+            tv_result.text = "We have a winner: ${player.name}"
         }
     }
 

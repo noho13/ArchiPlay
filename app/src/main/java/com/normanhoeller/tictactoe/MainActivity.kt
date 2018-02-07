@@ -2,7 +2,7 @@ package com.normanhoeller.tictactoe
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.normanhoeller.tictactoe.ui.MainFragment
+import com.normanhoeller.tictactoe.view.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
