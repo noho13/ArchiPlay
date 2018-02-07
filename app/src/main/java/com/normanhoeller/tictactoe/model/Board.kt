@@ -7,16 +7,14 @@ import com.normanhoeller.tictactoe.ui.MainFragment
 /**
  * Created by norman on 06.02.18.
  */
-class Board(private val view: Fragment) {
-
-    private val playStatus = arrayOfNulls<Char>(9)
+class Board(private val view: Fragment, var playStatus: CharArray) {
 
     fun storePosition(player: Player, pos: Int) {
         playStatus[pos] = player.symbol
-        updateView(pos, player)
+//        updateView(pos, player)
     }
 
-    private fun updateView(pos: Int, player: Player) {
+    fun updateView(pos: Int?, player: Player?) {
         (view as MainFragment).updateView(pos, player)
     }
 
@@ -24,7 +22,8 @@ class Board(private val view: Fragment) {
 
     fun mapToPosition(row: Int, col: Int) = row * 3 + col
 
-    fun checkForWinner(player: Player, pos: Int): Boolean {
+    fun checkForWinner(player: Player?, pos: Int?): Boolean {
+        if (player == null || pos == null) return false
         if (player.timesPlayed < 3) {
             return false
         }
@@ -64,5 +63,9 @@ class Board(private val view: Fragment) {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun checkDiagonalBottomLeftTopRight(player: Player): Boolean {
         return (2 until 7 step (2)).none { playStatus[it] == null || playStatus[it] != player.symbol }
+    }
+
+    fun reset() {
+        playStatus = CharArray(9)
     }
 }

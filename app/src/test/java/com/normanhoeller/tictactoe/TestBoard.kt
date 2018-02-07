@@ -9,14 +9,11 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito
-import org.mockito.runners.MockitoJUnitRunner
 
 /**
  * Created by norman on 06.02.18.
  */
-@RunWith(MockitoJUnitRunner::class)
 class TestBoard {
 
     private lateinit var board: Board
@@ -26,7 +23,7 @@ class TestBoard {
     @Before
     fun setup() {
         view = Mockito.mock(MainFragment::class.java)
-        board = Board(view)
+        board = Board(view, CharArray(9))
         player = Player("Norman", 'x')
     }
 
