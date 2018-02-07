@@ -1,59 +1,67 @@
 package com.normanhoeller.tictactoe
 
+import android.support.v4.app.Fragment
 import com.normanhoeller.tictactoe.model.Board
 import com.normanhoeller.tictactoe.model.Player
+import com.normanhoeller.tictactoe.ui.MainFragment
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mockito
+import org.mockito.runners.MockitoJUnitRunner
 
 /**
  * Created by norman on 06.02.18.
  */
+@RunWith(MockitoJUnitRunner::class)
 class TestBoard {
 
     private lateinit var board: Board
     private lateinit var player: Player
+    private lateinit var view: Fragment
 
     @Before
     fun setup() {
-        board = Board()
+        view = Mockito.mock(MainFragment::class.java)
+        board = Board(view)
         player = Player("Norman", 'x')
     }
 
     @Test
     fun testMappingOfRowAndColumnToPositionInArray() {
-        var pos = board.mapToPosition(0,0)
+        var pos = board.mapToPosition(0, 0)
         assertThat(pos, `is`(equalTo(0)))
 
-        pos = board.mapToPosition(0,1)
+        pos = board.mapToPosition(0, 1)
         assertThat(pos, `is`(equalTo(1)))
 
-        pos = board.mapToPosition(0,2)
+        pos = board.mapToPosition(0, 2)
         assertThat(pos, `is`(equalTo(2)))
 
-        pos = board.mapToPosition(1,0)
+        pos = board.mapToPosition(1, 0)
         assertThat(pos, `is`(equalTo(3)))
 
-        pos = board.mapToPosition(1,1)
+        pos = board.mapToPosition(1, 1)
         assertThat(pos, `is`(equalTo(4)))
 
-        pos = board.mapToPosition(1,2)
+        pos = board.mapToPosition(1, 2)
         assertThat(pos, `is`(equalTo(5)))
 
-        pos = board.mapToPosition(2,0)
+        pos = board.mapToPosition(2, 0)
         assertThat(pos, `is`(equalTo(6)))
 
-        pos = board.mapToPosition(2,1)
+        pos = board.mapToPosition(2, 1)
         assertThat(pos, `is`(equalTo(7)))
 
-        pos = board.mapToPosition(2,2)
+        pos = board.mapToPosition(2, 2)
         assertThat(pos, `is`(equalTo(8)))
     }
 
     @Test
-    fun testRowForCompleteness(){
+    fun testRowForCompleteness() {
         // row 0
         board.storePosition(player, 0)
         board.storePosition(player, 1)
@@ -119,7 +127,7 @@ class TestBoard {
     }
 
     @Test
-    fun testCheckForWinner(){
+    fun testCheckForWinner() {
         board.storePosition(player, 0)
         board.storePosition(player, 4)
         board.storePosition(player, 8)

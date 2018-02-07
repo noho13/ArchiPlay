@@ -1,16 +1,23 @@
 package com.normanhoeller.tictactoe.model
 
 import android.support.annotation.VisibleForTesting
+import android.support.v4.app.Fragment
+import com.normanhoeller.tictactoe.ui.MainFragment
 
 /**
  * Created by norman on 06.02.18.
  */
-class Board {
+class Board(private val view: Fragment) {
 
     private val playStatus = arrayOfNulls<Char>(9)
 
     fun storePosition(player: Player, pos: Int) {
         playStatus[pos] = player.symbol
+        updateView(pos, player)
+    }
+
+    private fun updateView(pos: Int, player: Player) {
+        (view as MainFragment).updateView(pos, player)
     }
 
     fun getValueForPosition(pos: Int) = playStatus[pos]
@@ -24,14 +31,14 @@ class Board {
         when (pos) {
             0 -> return checkRow(player, 0) || checkCol(player, 0) || checkDiagonalTopLeftBottomRight(player)
             1 -> return checkRow(player, 0) || checkCol(player, 1)
-            2 -> return checkRow(player, 0)  || checkCol(player, 2) || checkDiagonalBottomLeftTopRight(player)
+            2 -> return checkRow(player, 0) || checkCol(player, 2) || checkDiagonalBottomLeftTopRight(player)
             3 -> return checkRow(player, 1) || checkCol(player, 0)
             4 -> {
-                return checkRow(player, 1)  ||checkCol(player, 1)||
-                        checkDiagonalTopLeftBottomRight(player)|| checkDiagonalBottomLeftTopRight(player)
+                return checkRow(player, 1) || checkCol(player, 1) ||
+                        checkDiagonalTopLeftBottomRight(player) || checkDiagonalBottomLeftTopRight(player)
             }
             5 -> return checkRow(player, 1) || checkCol(player, 2)
-            6 -> return checkRow(player, 2) || checkCol(player, 0)|| checkDiagonalBottomLeftTopRight(player)
+            6 -> return checkRow(player, 2) || checkCol(player, 0) || checkDiagonalBottomLeftTopRight(player)
             7 -> return checkRow(player, 2) || checkCol(player, 1)
             8 -> return checkRow(player, 2) || checkCol(player, 2) || checkDiagonalTopLeftBottomRight(player)
         }
