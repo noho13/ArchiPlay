@@ -13,8 +13,6 @@ class Board(var playStatus: CharArray) {
 
     fun mapToPosition(row: Int, col: Int) = row * 3 + col
 
-    fun getDataForPosition(pos: Int) = playStatus[pos]
-
     fun checkForWinner(player: Player?, pos: Int?): Boolean {
         if (player == null || pos == null) return false
         if (player.timesPlayed < 3) {

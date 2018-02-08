@@ -22,6 +22,7 @@ class MainFragment : Fragment(), ViewInterface {
     companion object {
         fun createInstance() = MainFragment()
         const val GAME_STATE = "game_state"
+        const val WINNER_TEXT = "winner_text"
     }
 
     private lateinit var model: Board
@@ -36,6 +37,10 @@ class MainFragment : Fragment(), ViewInterface {
         super.onActivityCreated(savedInstanceState)
 
         init(savedInstanceState?.getCharArray(GAME_STATE))
+        if (savedInstanceState != null) {
+            updateBoard(model.playStatus)
+            tv_result.text = savedInstanceState.getString(WINNER_TEXT)
+        }
 
         tv_0_0.setOnClickListener { controller.clickOnPosition(0, 0) }
         tv_0_1.setOnClickListener { controller.clickOnPosition(0, 1) }
@@ -55,27 +60,16 @@ class MainFragment : Fragment(), ViewInterface {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.putCharArray(GAME_STATE, model.playStatus)
+        outState?.putString(WINNER_TEXT, tv_result.text.toString())
     }
 
     override fun update(mappedPosition: Int?, player: Player?) {
-        updateView(mappedPosition, player)
-
-    }
-
-    private fun reset() {
-        tv_0_0.text = ""
-        tv_0_1.text = ""
-        tv_0_2.text = ""
-
-        tv_1_0.text = ""
-        tv_1_1.text = ""
-        tv_1_2.text = ""
-
-        tv_2_0.text = ""
-        tv_2_1.text = ""
-        tv_2_2.text = ""
-
-        tv_result.text = ""
+        updateBoard(model.playStatus)
+        if (model.checkForWinner(player, mappedPosition)) {
+            tv_result.text = "We have a winner: ${player?.name}"
+        } else {
+            tv_result.text = ""
+        }
     }
 
     private fun init(playState: CharArray?) {
@@ -83,31 +77,25 @@ class MainFragment : Fragment(), ViewInterface {
         controller = Controller(model, this)
     }
 
-    private fun updateView(pos: Int?, player: Player?) {
-        if (pos == null || player == null) {
-            reset()
-            return
-        }
-        val symbol = player.symbol
-        when (pos) {
-            0 -> tv_0_0.text = symbol.toString()
-            1 -> tv_0_1.text = symbol.toString()
-            2 -> tv_0_2.text = symbol.toString()
+    private fun updateBoard(gameState: CharArray) {
+        (0 until root.childCount)
+                .map { root.getChildAt(it) }
+                .forEach {
+                    when (it.id) {
+                        R.id.tv_0_0 -> tv_0_0.text = gameState[0].toString()
+                        R.id.tv_0_1 -> tv_0_1.text = gameState[1].toString()
+                        R.id.tv_0_2 -> tv_0_2.text = gameState[2].toString()
 
-            3 -> tv_1_0.text = symbol.toString()
-            4 -> tv_1_1.text = symbol.toString()
-            5 -> tv_1_2.text = symbol.toString()
+                        R.id.tv_1_0 -> tv_1_0.text = gameState[3].toString()
+                        R.id.tv_1_1 -> tv_1_1.text = gameState[4].toString()
+                        R.id.tv_1_2 -> tv_1_2.text = gameState[5].toString()
 
-            6 -> tv_2_0.text = symbol.toString()
-            7 -> tv_2_1.text = symbol.toString()
-            8 -> tv_2_2.text = symbol.toString()
-        }
-        if (model.checkForWinner(player, pos)) {
-            tv_result.text = "We have a winner: ${player.name}"
-        }
-    }
+                        R.id.tv_2_0 -> tv_2_0.text = gameState[6].toString()
+                        R.id.tv_2_1 -> tv_2_1.text = gameState[7].toString()
+                        R.id.tv_2_2 -> tv_2_2.text = gameState[8].toString()
+                    }
+                }
 
-    fun restoreUIafterConfigChange(gameState: CharArray) {
 
     }
 }
