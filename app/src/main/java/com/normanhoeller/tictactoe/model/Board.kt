@@ -15,9 +15,6 @@ class Board(var playStatus: CharArray) {
 
     fun checkForWinner(player: Player?, pos: Int?): Boolean {
         if (player == null || pos == null) return false
-        if (player.timesPlayed < 3) {
-            return false
-        }
         when (pos) {
             0 -> return checkRow(player, 0) || checkCol(player, 0) || checkDiagonalTopLeftBottomRight(player)
             1 -> return checkRow(player, 0) || checkCol(player, 1)
@@ -58,5 +55,6 @@ class Board(var playStatus: CharArray) {
 
     fun reset() {
         playStatus = CharArray(9)
+
     }
 }
