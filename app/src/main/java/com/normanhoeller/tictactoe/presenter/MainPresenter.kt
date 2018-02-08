@@ -21,24 +21,34 @@ class MainPresenter(private val model: Board, private val view: UIInterface) : C
     }
 
     override fun clickOnCellWithPosition(row: Int, col: Int) {
-        val mappedPosition = model.mapToPosition(row, col)
-        var currentPlayer: Player
-        if (currentSymbol == null || currentSymbol == playerTwo.symbol) {
-            currentSymbol = playerOne.symbol
-            currentPlayer = playerOne
-        } else {
-            currentSymbol = playerTwo.symbol
-            currentPlayer = playerTwo
+        if (isSubscribed) {
+            val mappedPosition = model.mapToPosition(row, col)
+            val currentPlayer: Player
+            if (currentSymbol == null || currentSymbol == playerTwo.symbol) {
+                currentSymbol = playerOne.symbol
+                currentPlayer = playerOne
+            } else {
+                currentSymbol = playerTwo.symbol
+                currentPlayer = playerTwo
+            }
+            updateModel(currentPlayer, mappedPosition)
+            val message = computeMessage(currentPlayer, mappedPosition)
+
+            view.update(model.playStatus, message)
         }
-        model.storePosition(currentPlayer, mappedPosition)
-        val message = if (model.checkForWinner(currentPlayer, mappedPosition)) {
-            "We have a winner: ${currentPlayer.name}"
+    }
+
+    private fun updateModel(player: Player, mappedPosition: Int) {
+        model.storePosition(player, mappedPosition)
+    }
+
+    private fun computeMessage(player: Player, mappedPosition: Int): String {
+        return if (model.checkForWinner(player, mappedPosition)) {
+            "We have a winner: ${player.name}"
         } else {
             ""
         }
-        view.update(model.playStatus, message)
     }
-
 
     override fun unSubscribe() {
         isSubscribed = false

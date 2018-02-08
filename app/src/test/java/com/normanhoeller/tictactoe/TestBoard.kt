@@ -124,8 +124,6 @@ class TestBoard {
         board.storePosition(player, 4)
         board.storePosition(player, 8)
 
-        player.timesPlayed = 3
-
         assertThat(board.checkForWinner(player, 0), `is`(true))
         assertThat(board.checkForWinner(player, 4), `is`(true))
         assertThat(board.checkForWinner(player, 8), `is`(true))
