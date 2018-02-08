@@ -1,15 +1,12 @@
 package com.normanhoeller.tictactoe
 
-import android.support.v4.app.Fragment
 import com.normanhoeller.tictactoe.model.Board
 import com.normanhoeller.tictactoe.model.Player
-import com.normanhoeller.tictactoe.view.MainFragment
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
 
 /**
  * Created by norman on 06.02.18.
@@ -18,12 +15,10 @@ class TestBoard {
 
     private lateinit var board: Board
     private lateinit var player: Player
-    private lateinit var view: Fragment
 
     @Before
     fun setup() {
-        view = Mockito.mock(MainFragment::class.java)
-        board = Board(view, CharArray(9))
+        board = Board(CharArray(9))
         player = Player("Norman", 'x')
     }
 

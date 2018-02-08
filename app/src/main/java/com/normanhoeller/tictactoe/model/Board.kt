@@ -1,23 +1,19 @@
 package com.normanhoeller.tictactoe.model
 
 import android.support.annotation.VisibleForTesting
-import android.support.v4.app.Fragment
-import com.normanhoeller.tictactoe.view.MainFragment
 
 /**
  * Created by norman on 06.02.18.
  */
-class Board(private val view: Fragment, var playStatus: CharArray) {
+class Board(var playStatus: CharArray) {
 
     fun storePosition(player: Player, pos: Int) {
         playStatus[pos] = player.symbol
     }
 
-    fun updateView(pos: Int?, player: Player?) {
-        (view as MainFragment).updateView(pos, player)
-    }
-
     fun mapToPosition(row: Int, col: Int) = row * 3 + col
+
+    fun getDataForPosition(pos: Int) = playStatus[pos]
 
     fun checkForWinner(player: Player?, pos: Int?): Boolean {
         if (player == null || pos == null) return false

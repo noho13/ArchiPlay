@@ -58,7 +58,8 @@ class MainFragment : Fragment(), ViewInterface {
     }
 
     override fun update(mappedPosition: Int?, player: Player?) {
-        model.updateView(mappedPosition, player)
+        updateView(mappedPosition, player)
+
     }
 
     private fun reset() {
@@ -78,11 +79,11 @@ class MainFragment : Fragment(), ViewInterface {
     }
 
     private fun init(playState: CharArray?) {
-        model = Board(this, playState ?: CharArray(9))
+        model = Board(playState ?: CharArray(9))
         controller = Controller(model, this)
     }
 
-    fun updateView(pos: Int?, player: Player?) {
+    private fun updateView(pos: Int?, player: Player?) {
         if (pos == null || player == null) {
             reset()
             return
