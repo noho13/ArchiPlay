@@ -24,7 +24,7 @@ class TestMainPresenter {
     }
 
     @Test
-    fun testMessage() {
+    fun message_indicates_a_winner_not_empty() {
         presenter.subscribe()
         model.playStatus = charArrayOf('X', 'X', 'O')
         presenter.clickOnCellWithPosition(0, 2)
@@ -32,7 +32,15 @@ class TestMainPresenter {
     }
 
     @Test
-    fun testUpdateNotWorkingBecausePresenterIsNotSubscribed() {
+    fun message_indicates_no_winner_returns_empty() {
+        presenter.subscribe()
+        model.playStatus = charArrayOf('X', 'O', 'O')
+        presenter.clickOnCellWithPosition(0, 2)
+        // TODO finish test
+    }
+
+    @Test
+    fun update_not_running_because_presenter_not_subscribed() {
         // TODO finish test
     }
 
